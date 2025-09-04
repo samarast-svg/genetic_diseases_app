@@ -1,6 +1,6 @@
 [theme]
-primaryColor="#28B463"         # Πράσινο
-backgroundColor="#FDFEFE"      # Λευκό
-secondaryBackgroundColor="#D5F5E3"
-textColor="#1D8348"            # Σκούρο πράσινο
-font="serif"
+primaryColor="#BB86FC"         # Μωβ neon
+backgroundColor="#121212"      # Σχεδόν μαύρο
+secondaryBackgroundColor="#1E1E1E"
+textColor="#FFFFFF"            # Λευκό
+font="sans serif"
