@@ -1,6 +1,6 @@
 [theme]
-primaryColor="#BB86FC"         # Μωβ neon
-backgroundColor="#121212"      # Σχεδόν μαύρο
-secondaryBackgroundColor="#1E1E1E"
-textColor="#FFFFFF"            # Λευκό
+primaryColor="#2E86C1"         # Μπλε έντονο
+backgroundColor="#F8F9F9"      # Πολύ ανοιχτό γκρι/λευκό
+secondaryBackgroundColor="#D6EAF8" 
+textColor="#1B2631"            # Σκούρο γκρι-μπλε
 font="sans serif"
