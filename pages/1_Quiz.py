@@ -43,6 +43,12 @@ def generate_question(row):
     return question, correct, choices
 
 # --------- state ---------
+if "score" not in st.session_state:
+    st.session_state.score = 0
+if "q_index" not in st.session_state:
+    st.session_state.q_index = 0
+if "questions" not in st.session_state:
+    st.session_state.questions = random.sample(df.to_dict("records"), 5)
 if "quiz_q_index" not in st.session_state:
     st.session_state.quiz_q_index = 0
 if "quiz_score" not in st.session_state:
@@ -107,14 +113,11 @@ if st.session_state.quiz_checked:
     else:
         st.error(f"❌ Λάθος. Σωστή απάντηση: **{correct}**")
 
-# τέλος κουίζ
-if st.session_state.quiz_q_index >= len(st.session_state.quiz_questions):
-    st.info(f"📊 Τελικό σκορ: {st.session_state.quiz_score}/{len(st.session_state.quiz_questions)}")
+# --------- έλεγχος αν τελείωσε το quiz ---------
+if st.session_state.q_index >= len(st.session_state.questions):
+    st.success(f"📊 Τελικό σκορ: {st.session_state.score}/{len(st.session_state.questions)}")
     if st.button("🔄 Νέο Quiz"):
-        st.session_state.quiz_q_index = 0
-        st.session_state.quiz_score = 0
-        st.session_state.quiz_checked = False
-        st.session_state.quiz_last_correct = None
-        sample_size = min(QUIZ_LENGTH, len(df))
-        st.session_state.quiz_questions = random.sample(df.to_dict("records"), sample_size)
-    st.stop()
+        st.session_state.score = 0
+        st.session_state.q_index = 0
+        st.session_state.questions = random.sample(df.to_dict("records"), 5)
+    st.stop()  # σταματά την εκτέλεση εδώ
