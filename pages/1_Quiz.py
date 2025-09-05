@@ -55,9 +55,19 @@ if "quiz_checked" not in st.session_state:
 if "quiz_last_correct" not in st.session_state:
     st.session_state.quiz_last_correct = None
 
-# --------- current question ---------
-current = st.session_state.quiz_questions[st.session_state.quiz_q_index]
+# --------- έλεγχος αν τελείωσε το quiz ---------
+if st.session_state.q_index >= len(st.session_state.questions):
+    st.success(f"📊 Τελικό σκορ: {st.session_state.score}/{len(st.session_state.questions)}")
+    if st.button("🔄 Νέο Quiz"):
+        st.session_state.score = 0
+        st.session_state.q_index = 0
+        st.session_state.questions = random.sample(df.to_dict("records"), 5)
+    st.stop()  # σταματά την εκτέλεση εδώ
+
+# --------- τρέχουσα ερώτηση ---------
+current = st.session_state.questions[st.session_state.q_index]
 question, correct, choices = generate_question(current)
+
 
 st.write(f"**Ερώτηση {st.session_state.quiz_q_index + 1}/{len(st.session_state.quiz_questions)}**")
 st.write(question)
