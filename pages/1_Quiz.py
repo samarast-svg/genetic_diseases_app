@@ -18,6 +18,35 @@ def load_data():
 
 df = load_data()
 
+# --- αρχικοποίηση state ---
+if "score" not in st.session_state:
+    st.session_state.score = 0
+if "q_index" not in st.session_state:
+    st.session_state.q_index = 0
+if "questions" not in st.session_state:
+    # φτιάχνουμε όλες τις ερωτήσεις με τις πιθανές απαντήσεις από την αρχή
+    raw = random.sample(df.to_dict("records"), 5)
+    st.session_state.questions = []
+    for row in raw:
+        q_type = random.choice(["inheritance", "mutation"])
+        if q_type == "inheritance":
+            question = f"Ποια είναι η μορφή κληρονομικότητας της ασθένειας **{row['Disease']}**;"
+            correct = str(row["Inheritance"])
+            pool = df["Inheritance"].dropna().astype(str).unique().tolist()
+        else:
+            question = f"Ποιος είναι ο τύπος μετάλλαξης που σχετίζεται με την ασθένεια **{row['Disease']}**;"
+            correct = str(row["MutationType"])
+            pool = df["MutationType"].dropna().astype(str).unique().tolist()
+        if correct in pool:
+            pool.remove(correct)
+        choices = random.sample(pool, k=min(2, len(pool))) + [correct]
+        random.shuffle(choices)
+        st.session_state.questions.append({
+            "question": question,
+            "correct": correct,
+            "choices": choices
+        })
+
 st.title("🧪 Quiz – Γενετικές Ασθένειες")
 st.markdown("Απάντησε στις ερωτήσεις για να ελέγξεις τις γνώσεις σου!")
 
@@ -119,5 +148,15 @@ if st.session_state.q_index >= len(st.session_state.questions):
     if st.button("🔄 Νέο Quiz"):
         st.session_state.score = 0
         st.session_state.q_index = 0
-        st.session_state.questions = random.sample(df.to_dict("records"), 5)
-    st.stop()  # σταματά την εκτέλεση εδώ
+        st.session_state.questions = []  # θα ξαναδημιουργηθούν με refresh
+        st.experimental_rerun()
+    st.stop()
+
+# --------- τρέχουσα ερώτηση ---------
+current = st.session_state.questions[st.session_state.q_index]
+question, correct, choices = current["question"], current["correct"], current["choices"]
+
+st.write(f"**Ερώτηση {st.session_state.q_index+1}/{len(st.session_state.questions)}**")
+st.write(question)
+
+answer = st.radio("Επέλεξε μία απάντηση:", choices, key=f"q{st.session_state.q_index}")
