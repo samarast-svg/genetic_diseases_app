@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 import urllib.parse
 
+st.set_page_config(
+    page_title="Library",   # 👈 αυτό θα φαίνεται στο sidebar
+    page_icon="📚",
+    layout="centered"
+)
+
 # Φόρτωση dataset με ελληνικές και αγγλικές ονομασίες
 @st.cache_data
 def load_data():
@@ -50,5 +56,6 @@ if query:
         st.warning("❌ Δεν βρέθηκαν αποτελέσματα.")
 else:
     st.info("✏️ Πληκτρολόγησε μια λέξη-κλειδί για να ξεκινήσεις αναζήτηση.")
+
 
 
