@@ -1,11 +1,6 @@
 import streamlit as st
 import pandas as pd
-
-st.set_page_config(
-    page_title="Library",   # 👈 αυτό θα φαίνεται στο sidebar
-    page_icon="📚",
-    layout="centered"
-)
+import urllib.parse
 
 # Φόρτωση dataset με ελληνικές και αγγλικές ονομασίες
 @st.cache_data
