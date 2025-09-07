@@ -76,7 +76,7 @@ if st.session_state.q_index >= len(st.session_state.questions):
         st.session_state.score = 0
         st.session_state.q_index = 0
         st.session_state.questions = []
-        st.experimental_rerun()
+        st.rerun()
     st.stop()
 
 # -----------------------------
@@ -100,4 +100,5 @@ if st.button("Υποβολή"):
     else:
         st.error(f"❌ Λάθος! Σωστή απάντηση: **{correct}**")
     st.session_state.q_index += 1
-    st.experimental_rerun()
+    st.rerun()
+
