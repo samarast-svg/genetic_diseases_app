@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import urllib.parse
 
 st.set_page_config(
     page_title="Library",   # 👈 αυτό θα φαίνεται στο sidebar
@@ -56,6 +55,7 @@ if query:
         st.warning("❌ Δεν βρέθηκαν αποτελέσματα.")
 else:
     st.info("✏️ Πληκτρολόγησε μια λέξη-κλειδί για να ξεκινήσεις αναζήτηση.")
+
 
 
 
