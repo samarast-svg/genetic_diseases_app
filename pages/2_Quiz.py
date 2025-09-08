@@ -1,4 +1,4 @@
-# pages/1_Quiz.py
+# pages/2_Quiz.py
 import streamlit as st
 import pandas as pd
 import random
