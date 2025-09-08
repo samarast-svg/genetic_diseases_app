@@ -98,7 +98,6 @@ if st.session_state.quiz_q_index >= len(st.session_state.quiz_questions):
             "Αποτέλεσμα": "✅" if ok else "❌"
         })
     df_summary = pd.DataFrame(rows)
-    # Εμφάνιση πίνακα (μικροί χαρακτήρες αν οι ερωτήσεις είναι μεγάλες)
     st.dataframe(df_summary, use_container_width=True)
 
     # Επιπλέον: αναλυτικά expanders
@@ -141,14 +140,14 @@ st.write(question)
 # Το radio έχει μοναδικό key ανά ερώτηση, ώστε να αποθηκεύεται τοπικά
 radio_key = f"answer_{st.session_state.quiz_q_index}"
 # Αν ο χρήστης έχει ήδη απαντήσει την τρέχουσα ερώτηση (π.χ. γύρισε πίσω), φορτώνουμε την προηγούμενη επιλογή
-default = None
-if st.session_state.quiz_user_answers[st.session_state.quiz_q_index] is not None:
-    default = st.session_state.quiz_user_answers[st.session_state.quiz_q_index]
+default = st.session_state.quiz_user_answers[st.session_state.quiz_q_index]
+# Εφόσον το default μπορεί να είναι None, χειριζόμαστε το index σωστά
+index = choices.index(default) if (default is not None and default in choices) else 0
 
-answer = st.radio("Επέλεξε μία απάντηση:", choices, index=choices.index(default) if default in choices else 0, key=radio_key)
+answer = st.radio("Επέλεξε μία απάντηση:", choices, index=index, key=radio_key)
 
 # -----------------------------
-# Callback για υποβολή
+# Callback για υποβολή (χωρίς st.rerun() μέσα)
 # -----------------------------
 def submit_answer(index):
     sel = st.session_state.get(f"answer_{index}")
@@ -159,6 +158,6 @@ def submit_answer(index):
         st.session_state.quiz_score += 1
     # Μετάβαση στην επόμενη ερώτηση
     st.session_state.quiz_q_index += 1
-    st.rerun()
+    # **ΜΗ st.rerun() ΕΔΩ** — ο Streamlit θα rerun μετά την callback αυτόματα
 
 st.button("Υποβολή", on_click=submit_answer, args=(st.session_state.quiz_q_index,))
