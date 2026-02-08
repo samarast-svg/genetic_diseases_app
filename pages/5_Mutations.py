@@ -115,6 +115,6 @@ if st.session_state.answered:
             st.session_state.current_index += 1
             st.session_state.answered = False
             st.session_state.selected_option = None
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.success("🎉 Ολοκλήρωσες όλες τις μεταλλάξεις!")
