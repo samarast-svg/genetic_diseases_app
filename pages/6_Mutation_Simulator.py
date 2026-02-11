@@ -30,7 +30,24 @@ genetic_code = {
     "GGU":"Gly","GGC":"Gly","GGA":"Gly","GGG":"Gly"
 }
 
-original_dna = "ATGGAATTTCGATAA"
+st.markdown("### ✏️ Δώσε δική σου αλληλουχία DNA")
+
+user_dna = st.text_input(
+    "Εισάγετε DNA (μόνο A, T, G, C):",
+    value="ATGGAATTTCGATAA"
+)
+
+# καθαρισμός εισόδου
+user_dna = user_dna.upper().replace(" ", "")
+
+valid_bases = set("ATGC")
+
+if set(user_dna).issubset(valid_bases) and len(user_dna) >= 6:
+    original_dna = user_dna
+else:
+    st.error("Η αλληλουχία πρέπει να περιέχει μόνο A, T, G, C και να έχει μήκος ≥ 6.")
+    st.stop()
+
 
 # -------------------------------------------------
 # ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ
