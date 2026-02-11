@@ -188,9 +188,13 @@ with col2:
 mutation_result = classify_mutation(
     original_protein,
     mutated_protein,
-    mutation_choice == st.selectbox(
-    "Επίλεξε τύπο μετάλλαξης",
+   st.subheader("Επιλογή τύπου μετάλλαξης")
+
+mutation_choice = st.selectbox(
+    "Διάλεξε μετάλλαξη:",
     ["Substitution", "Insertion", "Deletion"]
+)
+
 )
 st.subheader("Αποτέλεσμα μετάλλαξης")
 st.success(mutation_result)
