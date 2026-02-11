@@ -186,6 +186,15 @@ with col2:
     st.write("mRNA:", split_codons(mutated_mrna))
     st.write("Πρωτεΐνη:", " - ".join(mutated_protein))
 
+mutation_result = classify_mutation(
+    original_protein,
+    mutated_protein,
+    mutation_choice
+)
+
+st.markdown("## 🧬 Τύπος μετάλλαξης")
+st.success(mutation_result)
+
 # -------------------------------------------------
 # ΕΠΙΣΤΗΜΟΝΙΚΗ ΕΞΗΓΗΣΗ
 # -------------------------------------------------
