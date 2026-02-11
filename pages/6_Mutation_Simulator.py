@@ -45,17 +45,33 @@ def split_codons(seq):
 def codon_list(seq):
     return [seq[i:i+3] for i in range(0, len(seq), 3)]
 
-def translate(mrna):
-    codons = codon_list(mrna)
+def translate_rna(mrna):
+    codons = [mrna[i:i+3] for i in range(0, len(mrna), 3)]
+    
     protein = []
+    started = False
+    
     for codon in codons:
         if len(codon) < 3:
             break
+        
+        # ξεκινάμε από START codon
+        if codon == "AUG":
+            started = True
+        
+        if not started:
+            continue
+        
         aa = genetic_code.get(codon, "?")
-        protein.append(aa)
+        
         if aa == "STOP":
+            protein.append("STOP")
             break
-    return protein
+        
+        protein.append(aa)
+    
+    return codons, protein
+
 
 # -------------------------------------------------
 # ΜΕΤΑΛΛΑΞΕΙΣ + ΘΕΣΗ ΜΕΤΑΛΛΑΞΗΣ
@@ -102,8 +118,8 @@ elif mutation_type == "Frameshift":
 original_mrna = dna_to_mrna(original_dna)
 mutated_mrna = dna_to_mrna(mutated_dna)
 
-original_protein = translate(original_mrna)
-mutated_protein = translate(mutated_mrna)
+original_codons, original_protein = translate_rna(original_mrna)
+mutated_codons, mutated_protein = translate_rna(mutated_mrna)
 
 # -------------------------------------------------
 # ΕΜΦΑΝΙΣΗ DNA ΜΕ ΤΡΙΑΔΕΣ
