@@ -89,6 +89,22 @@ def translate_rna(mrna):
     
     return codons, protein
 
+def classify_mutation(original_protein, mutated_protein, mutation_type):
+    
+    # Frameshift ελέγχεται από το είδος μετάλλαξης
+    if mutation_type in ["Insertion", "Deletion"]:
+        return "Frameshift mutation ⚠️"
+
+    # ίδια πρωτεΐνη
+    if original_protein == mutated_protein:
+        return "Silent mutation 🟢"
+
+    # πρόωρο stop
+    if "*" in mutated_protein[:-1]:
+        return "Nonsense mutation 🔴"
+
+    # διαφορετικά αμινοξέα
+    return "Missense mutation 🟠"
 
 # -------------------------------------------------
 # ΜΕΤΑΛΛΑΞΕΙΣ + ΘΕΣΗ ΜΕΤΑΛΛΑΞΗΣ
