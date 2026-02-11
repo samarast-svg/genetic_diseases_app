@@ -195,11 +195,10 @@ mutation_choice = st.selectbox(
     ["Substitution", "Insertion", "Deletion"]
 )
 
-)
+
 st.subheader("Αποτέλεσμα μετάλλαξης")
 st.success(mutation_result)
     
-)
 
 st.markdown("## 🧬 Τύπος μετάλλαξης")
 st.success(mutation_result)
